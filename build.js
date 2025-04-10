@@ -9,21 +9,19 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const platforms = {
-  firefox: {
-    background: {
-      scripts: ['background.js'],
-      type: 'module'
-    }
-  },
+  firefox: {}, // no background
   chrome: {
     background: {
-      service_worker: 'background.js'
+      service_worker: "background.js"
     }
   }
 };
 
 function buildManifest(base, platform) {
-  const result = { ...base, background: platforms[platform] };
+  const result = { ...base };
+  if (platforms[platform].background) {
+    result.background = platforms[platform].background;
+  }
   return result;
 }
 
